@@ -1,5 +1,6 @@
 package com.psql.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +21,30 @@ import java.util.Properties;
 @SpringBootApplication
 public class App implements CommandLineRunner
 {
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
+
+    @Value("${spring.datasource.username}")
+    private String dbUsername;
+
+    @Value("${spring.datasource.password}")
+    private String dbPassword;
+
+    @Value("${spring.datasource.hikari.data-source-properties.sslcert}")
+    private String sslCert;
+
+    @Value("${spring.datasource.hikari.data-source-properties.sslkey}")
+    private String sslKey;
+
+    @Value("${spring.datasource.hikari.data-source-properties.sslrootcert}")
+    private String sslRootCert;
+
+    @Value("${spring.datasource.hikari.data-source-properties.sslmode}")
+    private String sslMode;
+
+    @Value("${spring.datasource.hikari.data-source-properties.ssl}")
+    private String ssl;
+
     public static void main( String[] args )
     {
         SpringApplication.run(App.class);
@@ -27,29 +52,26 @@ public class App implements CommandLineRunner
 
     @Override
     public void run(String... args) {
-        String url = "jdbc:postgresql://localhost:5432/postgres";
-        String username = "postgres";
-        String password = "";
         String BASE_PATH = Paths.get("certs")
                 .toAbsolutePath()
                 .toString();
 
         Map<String, String> connectionProperties = Map.of(
-                "sslcert", BASE_PATH.concat("/client.crt"),
-                "sslkey", BASE_PATH.concat("/client.pk8"),
-                "sslrootcert", BASE_PATH.concat("/rootCA.crt"));
+                "sslcert", BASE_PATH.concat("/").concat(sslCert),
+                "sslkey", BASE_PATH.concat("/").concat(sslKey),
+                "sslrootcert", BASE_PATH.concat("/").concat(sslRootCert));
 
         System.out.println("Checking PostgreSQL SSL connection...");
-        checkConnectionSsl(url, username, password, connectionProperties);
+        checkConnectionSsl(dbUrl, dbUsername, dbPassword, connectionProperties, sslMode, ssl);
     }
 
-    public void checkConnectionSsl(String url, String username, String password, Map<String, String> extraProps) {
+    public void checkConnectionSsl(String url, String username, String password, Map<String, String> extraProps, String sslMode, String ssl) {
         Properties props = new Properties();
         props.putAll(extraProps);
         props.put("user", username);
         props.put("password", password);
-        props.put("sslmode", "verify-ca");
-        props.put("ssl", "true");
+        props.put("sslmode", sslMode);
+        props.put("ssl", ssl);
 
         try (Connection connection = DriverManager.getConnection(url, props)) {
             // Verify that this backend is using SSL at the server level.
