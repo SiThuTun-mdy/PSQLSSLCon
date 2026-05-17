@@ -26,8 +26,9 @@ ssl_cert_file = '/var/lib/postgresql/data/certs/localhost.crt'
 #ssl_crl_dir = ''
 ssl_key_file = '/var/lib/postgresql/data/certs/localhost.key'
 ```
+
+Make sure the certs with permission 640 or less
 ```
-make sure the certs with permission 640 or less
 chmod 600 path/to/the/file ...
 ```
 ### Update pg_hba.conf
