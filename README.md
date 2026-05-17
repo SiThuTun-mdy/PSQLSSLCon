@@ -2,7 +2,7 @@
 
 ## Overview
 This script checks if a PostgreSQL database is configured to accept SSL connections. It connects to the database using the provided connection parameters and verifies if SSL is enabled.
-
+Please take a look for the [Postgresql-ssl](https://github.com/SiThuTun-mdy/postgresql-ssl) in docker container.
 ## Technologies Used
 1. Spring Boot
 2. PostgreSQL JDBC Driver
@@ -25,6 +25,10 @@ ssl_cert_file = '/var/lib/postgresql/data/certs/localhost.crt'
 #ssl_crl_file = ''
 #ssl_crl_dir = ''
 ssl_key_file = '/var/lib/postgresql/data/certs/localhost.key'
+```
+```
+make sure the certs with permission 640 or less
+chmod 600 path/to/the/file ...
 ```
 ### Update pg_hba.conf
 ```
