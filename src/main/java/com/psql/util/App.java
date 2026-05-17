@@ -52,14 +52,11 @@ public class App implements CommandLineRunner
 
     @Override
     public void run(String... args) {
-        String BASE_PATH = Paths.get("certs")
-                .toAbsolutePath()
-                .toString();
 
         Map<String, String> connectionProperties = Map.of(
-                "sslcert", BASE_PATH.concat("/").concat(sslCert),
-                "sslkey", BASE_PATH.concat("/").concat(sslKey),
-                "sslrootcert", BASE_PATH.concat("/").concat(sslRootCert));
+                "sslcert", sslCert,
+                "sslkey", sslKey,
+                "sslrootcert", sslRootCert);
 
         System.out.println("Checking PostgreSQL SSL connection...");
         checkConnectionSsl(dbUrl, dbUsername, dbPassword, connectionProperties, sslMode, ssl);
