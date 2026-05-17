@@ -1,4 +1,4 @@
-# Postgres SSL Connection Checker
+# Postgres with SSL Connection
 
 ## Overview
 This script checks if a PostgreSQL database is configured to accept SSL connections. It connects to the database using the provided connection parameters and verifies if SSL is enabled.
