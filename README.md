@@ -6,6 +6,7 @@ Please take a look for the [Postgresql-ssl](https://github.com/SiThuTun-mdy/post
 ## Technologies Used
 1. Spring Boot
 2. PostgreSQL JDBC Driver
+3. Spring Data JPA
 
 ## Update Config file
 
