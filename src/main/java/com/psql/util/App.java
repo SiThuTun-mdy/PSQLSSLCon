@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Hello world!
  *
  */
 @SpringBootApplication
